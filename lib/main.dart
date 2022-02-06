@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tv_shows/Screens/MainScreen.dart';
 import 'package:tv_shows/Screens/InitScreen.dart';
+import 'package:tv_shows/Utilities/DependencyInjector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,6 +9,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  static const DependencyInjector _di = DependencyInjector();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const InitScreen(),
       routes: {
-        "/main": (ctx) => const MainScreen(),
+        "/login": (ctx) => _di.makeLoginScreen(),
+        "/shows": (ctx) => _di.makeListOfShowsScreen(),
       },
     );
   }
