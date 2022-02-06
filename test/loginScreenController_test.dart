@@ -6,7 +6,7 @@ import 'package:tv_shows/Services/UserApi.dart';
 
 void main() {
   group("loginScreenControllerTests", () {
-    test("given failed authentication, login returns before doing anything else", () async {
+    test("given failed authentication, loginUser shows an error", () async {
       // Setup
       // As far as I know, it is encouraged to setup the SUT every time before running the unit test, so that the initial state of it
       // is the same every time. This is ugly and could've been extracted into a method, had I found a different way to test this use case.
@@ -27,10 +27,7 @@ void main() {
       // Test
       await loginController.loginUser();
       // Verify
-      expect(router.navigatedToMainScreen, false);
-      expect(localStorage.secureStorage.containsKey("token"), false);
-      // This test would be invalid if we added something between the userApi login call and the verification that the token is not null.
-      // Besides, I'm not sure it even makes sense to test that something DOESN'T happen, so perhaps this test shouldn't even exist.
+      expect(router.showedLoginError, true);
     });
 
     test("given successful authentication and remember me is true, loginUser saves user credentials to secure storage", () async {
@@ -59,7 +56,7 @@ void main() {
       expect(localStorage.secureStorage["token"] == "token", true);
     });
 
-    test("given successful verification, loginUser navigates to mainScreen", () async {
+    test("given successful authentication, loginUser navigates to mainScreen", () async {
       // Setup
       final userApi = MockUserApi();
       final router = MockLoginRouter();

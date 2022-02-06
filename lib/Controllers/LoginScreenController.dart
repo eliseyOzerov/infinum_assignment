@@ -76,15 +76,15 @@ class LoginScreenController extends ChangeNotifier {
 
     final String? token = await userApi.loginWithEmailAndPassword(email, password);
 
+    isLoggingIn = false;
+    notifyListeners();
+
     if (token == null) {
-      // possibly notify user of an error
+      router.showLoginError();
       return;
     }
 
     _securelyStoreLoginData(email, password, token);
-
-    isLoggingIn = false;
-    notifyListeners();
 
     router.navigateToMainScreen();
   }
