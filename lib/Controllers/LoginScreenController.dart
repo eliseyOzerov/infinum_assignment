@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tv_shows/Managers/LocalStorage.dart';
+import 'package:tv_shows/Managers/SecureLocalStorage.dart';
 import 'package:tv_shows/Routers/LoginRouter.dart';
 import 'package:tv_shows/Services/UserApi.dart';
 
@@ -7,7 +7,7 @@ class LoginScreenController extends ChangeNotifier {
   // Although I've initially set these as late variables, there isn't really any need for a late modifier, since I can just pass
   // them in the constructor and not risk reassignment afterwards.
   final UserApiInterface userApi;
-  final LocalStorageInterface localStorage;
+  final SecureLocalStorageInterface secureLocalStorage;
   // We need the router to navigate to the next screen once the login has gone through. We could also use a local BuildContext variable, but that
   // would make the LoginController dependent on the BuildContext, meaning we can't test the navigation part of the login method since
   // we don't have a BuildContext when testing, unless I'm missing something. Also we can't substitute the routing implementation without
@@ -26,7 +26,7 @@ class LoginScreenController extends ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  LoginScreenController({required this.userApi, required this.localStorage}) {
+  LoginScreenController({required this.userApi, required this.secureLocalStorage}) {
     emailController.addListener(notifyListeners);
     passwordController.addListener(notifyListeners);
   }
@@ -97,8 +97,8 @@ class LoginScreenController extends ChangeNotifier {
   // ---- Private methods ---- //
 
   void _securelyStoreLoginData(String email, String password, String token) {
-    localStorage.securelyWrite("email", email);
-    localStorage.securelyWrite("password", password);
-    localStorage.securelyWrite("token", token);
+    secureLocalStorage.write("email", email);
+    secureLocalStorage.write("password", password);
+    secureLocalStorage.write("token", token);
   }
 }
