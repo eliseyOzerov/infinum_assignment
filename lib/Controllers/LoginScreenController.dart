@@ -4,7 +4,10 @@ import 'package:tv_shows/Routers/LoginRouter.dart';
 import 'package:tv_shows/Services/UserApi.dart';
 
 class LoginScreenController extends ChangeNotifier {
-  late final UserApiInterface userApi;
+  // Although I've initially set these as late variables, there isn't really any need for a late modifier, since I can just pass
+  // them in the constructor and not risk reassignment afterwards.
+  final UserApiInterface userApi;
+  final LocalStorageInterface localStorage;
   // We need the router to navigate to the next screen once the login has gone through. We could also use a local BuildContext variable, but that
   // would make the LoginController dependent on the BuildContext, meaning we can't test the navigation part of the login method since
   // we don't have a BuildContext when testing, unless I'm missing something. Also we can't substitute the routing implementation without
@@ -15,13 +18,15 @@ class LoginScreenController extends ChangeNotifier {
   // We could also do the routing in the LoginScreen by returning a success boolean from the loginUser method,
   // but then we would need business logic in the LoginScreen (if successful go to main screen, otherwise show error),
   // or we could pass success/error callbacks to the loginUser method, but that's just ugly.
-  late final LoginRouterInterface router;
-  late final LocalStorageInterface localStorage;
+  //
+  // Since we're initializing the router in the build method, we can't use late final. Instead it's going to be nullable with a null check
+  // before assignment inside the build method. This might not be the best solution, but it's the simplest I could think of right now.
+  LoginRouterInterface? router;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  LoginScreenController() {
+  LoginScreenController({required this.userApi, required this.localStorage}) {
     emailController.addListener(notifyListeners);
     passwordController.addListener(notifyListeners);
   }
@@ -80,13 +85,13 @@ class LoginScreenController extends ChangeNotifier {
     notifyListeners();
 
     if (token == null) {
-      router.showLoginError();
+      router?.showLoginError();
       return;
     }
 
     _securelyStoreLoginData(email, password, token);
 
-    router.navigateToMainScreen();
+    router?.navigateToMainScreen();
   }
 
   // ---- Private methods ---- //

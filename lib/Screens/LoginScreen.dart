@@ -7,13 +7,13 @@ import 'package:tv_shows/Utilities/Constants.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
-  LoginScreenController loginController;
+  LoginScreenController controller;
 
-  LoginScreen({required this.loginController, Key? key}) : super(key: key);
+  LoginScreen({required this.controller, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    loginController.router = LoginRouter(context);
+    controller.router ??= LoginRouter(context);
 
     // This Provider could also be set in the MyApp widget to provide the state throughout the app,
     // but since it only handles the login screen, we provide it here, at the lowest ancestor.
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
     //
     // There's a lot for me to learn regarding architecture and best practices, which is what I aim to do as a part of your team.
     return ChangeNotifierProvider<LoginScreenController>(
-      create: (context) => loginController,
+      create: (context) => controller,
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(PADDING, PADDING, PADDING, 0),
                   child: TextField(
-                    controller: loginController.emailController,
+                    controller: controller.emailController,
                     autocorrect: false,
                     decoration: const InputDecoration(labelText: "Email"),
                     cursorColor: Theme.of(context).primaryColor,
