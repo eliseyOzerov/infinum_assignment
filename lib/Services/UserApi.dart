@@ -16,7 +16,7 @@ class UserApi implements UserApiInterface {
   Future<String?> loginWithEmailAndPassword(String email, String password) async {
     try {
       final Response<Map<String, dynamic>> response = await Dio().post(
-        "$BASE_URL/users/sessions",
+        "$BASE_URL/api/users/sessions",
         data: {
           "email": email,
           "password": password,
