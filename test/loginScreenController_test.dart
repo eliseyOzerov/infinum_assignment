@@ -17,10 +17,11 @@ void main() {
       final router = MockLoginRouter();
       final localStorage = MockLocalStorage();
 
-      final LoginScreenController loginController = LoginScreenController();
+      final LoginScreenController loginController = LoginScreenController(
+        userApi: userApi,
+        localStorage: localStorage,
+      );
       loginController.router = router;
-      loginController.userApi = userApi;
-      loginController.localStorage = localStorage;
 
       loginController.emailController.text = "";
       loginController.passwordController.text = "";
@@ -36,10 +37,11 @@ void main() {
       final router = MockLoginRouter();
       final localStorage = MockLocalStorage();
 
-      final LoginScreenController loginController = LoginScreenController();
+      final LoginScreenController loginController = LoginScreenController(
+        userApi: userApi,
+        localStorage: localStorage,
+      );
       loginController.router = router;
-      loginController.userApi = userApi;
-      loginController.localStorage = localStorage;
 
       // obviously these credentials would fail in the real world, but we're testing the saving of the credentials, not authentication
       loginController.emailController.text = "validemail";
@@ -62,10 +64,11 @@ void main() {
       final router = MockLoginRouter();
       final localStorage = MockLocalStorage();
 
-      final LoginScreenController loginController = LoginScreenController();
+      final LoginScreenController loginController = LoginScreenController(
+        userApi: userApi,
+        localStorage: localStorage,
+      );
       loginController.router = router;
-      loginController.userApi = userApi;
-      loginController.localStorage = localStorage;
 
       loginController.emailController.text = "validemail";
       loginController.passwordController.text = "validpassword";
