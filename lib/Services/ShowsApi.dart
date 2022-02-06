@@ -59,3 +59,31 @@ class ShowsApi implements ShowsApiInterface {
     }
   }
 }
+
+class MockShowsApi implements ShowsApiInterface {
+  @override
+  Future<List<ShowModel>?> getShows(String authToken) async {
+    if (authToken == "validToken") {
+      return [
+        ShowModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          likesCount: 1,
+        ),
+        ShowModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          likesCount: 1,
+        ),
+        ShowModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          likesCount: 1,
+        ),
+      ];
+    }
+  }
+}

@@ -24,3 +24,18 @@ class ListOfShowsRouter implements ListOfShowsRouterInterface {
     Navigator.of(_context).push(route);
   }
 }
+
+class MockListOfShowsRouter implements ListOfShowsRouterInterface {
+  bool navigatedToShowDetailsScreen = false;
+  bool returnedToLoginScreen = false;
+
+  @override
+  void navigateToShowDetailsScreen(ShowModel show) {
+    navigatedToShowDetailsScreen = true;
+  }
+
+  @override
+  void returnToLoginScreen() {
+    returnedToLoginScreen = true;
+  }
+}
