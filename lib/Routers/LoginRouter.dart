@@ -12,7 +12,7 @@ class LoginRouter implements LoginRouterInterface {
 
   @override
   void navigateToMainScreen() {
-    Navigator.of(_context).pushReplacementNamed("/main");
+    Navigator.of(_context).pushReplacementNamed("/shows");
   }
 
   @override

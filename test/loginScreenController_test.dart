@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tv_shows/Controllers/LoginScreenController.dart';
-import 'package:tv_shows/Managers/LocalStorage.dart';
+import 'package:tv_shows/Managers/SecureLocalStorage.dart';
 import 'package:tv_shows/Routers/LoginRouter.dart';
 import 'package:tv_shows/Services/UserApi.dart';
 
@@ -15,11 +15,11 @@ void main() {
       // use the loginController object to test those properties, since it depends on interfaces that don't contain these properties.
       final userApi = MockUserApi();
       final router = MockLoginRouter();
-      final localStorage = MockLocalStorage();
+      final localStorage = MockSecureLocalStorage();
 
       final LoginScreenController loginController = LoginScreenController(
         userApi: userApi,
-        localStorage: localStorage,
+        secureLocalStorage: localStorage,
       );
       loginController.router = router;
 
@@ -35,11 +35,11 @@ void main() {
       // Setup
       final userApi = MockUserApi();
       final router = MockLoginRouter();
-      final localStorage = MockLocalStorage();
+      final localStorage = MockSecureLocalStorage();
 
       final LoginScreenController loginController = LoginScreenController(
         userApi: userApi,
-        localStorage: localStorage,
+        secureLocalStorage: localStorage,
       );
       loginController.router = router;
 
@@ -62,11 +62,11 @@ void main() {
       // Setup
       final userApi = MockUserApi();
       final router = MockLoginRouter();
-      final localStorage = MockLocalStorage();
+      final localStorage = MockSecureLocalStorage();
 
       final LoginScreenController loginController = LoginScreenController(
         userApi: userApi,
-        localStorage: localStorage,
+        secureLocalStorage: localStorage,
       );
       loginController.router = router;
 
