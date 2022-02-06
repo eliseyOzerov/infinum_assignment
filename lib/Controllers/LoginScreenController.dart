@@ -58,15 +58,15 @@ class LoginScreenController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Calling this before logging in the user should lead to the automatic login of the user the next time the app launches. How to test this?
-  //
+  // Calling this before logging in the user should lead to the automatic login of the user the next time the app launches.
+  // Not sure where to test this, so I'll leave it out for now.
   void setRememberUser(bool? value) {
     rememberUser = value!;
     notifyListeners();
   }
 
-  // this should take the user credentials, login the user, store their data securely and navigate to the next screen if login
-  // was successul or return before doing anything else if it wasn't successful
+  // This should take the user credentials, login the user, store their data securely and navigate to the next screen if login
+  // was successul or return before doing anything else if it wasn't successful.
   Future<void> loginUser() async {
     isLoggingIn = true;
     notifyListeners();
@@ -91,8 +91,6 @@ class LoginScreenController extends ChangeNotifier {
 
   // ---- Private methods ---- //
 
-  // This could be moved to some LocalStorage class in case we wanted to change the implementation later,
-  // but I think FlutterSecureStorage is a good enough abstraction for now
   void _securelyStoreLoginData(String email, String password, String token) {
     localStorage.securelyWrite("email", email);
     localStorage.securelyWrite("password", password);
