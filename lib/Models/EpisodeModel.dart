@@ -4,17 +4,18 @@ class EpisodeModel {
   final String id;
   final String title;
   final String description;
-  final String imageUrl;
   final String episodeNumber;
   final String season;
+
+  String imageUrl;
 
   EpisodeModel({
     required this.id,
     required this.title,
     required this.description,
-    required this.imageUrl,
     required this.episodeNumber,
     required this.season,
+    required this.imageUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,9 +23,9 @@ class EpisodeModel {
       '_id': id,
       'title': title,
       'description': description,
-      'imageUrl': imageUrl,
       'episodeNumber': episodeNumber,
       'season': season,
+      'imageUrl': imageUrl,
     };
   }
 
@@ -33,9 +34,9 @@ class EpisodeModel {
       id: map['_id'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
-      imageUrl: map['imageUrl'] ?? '',
       episodeNumber: map['episodeNumber'] ?? '',
       season: map['season'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
     );
   }
 
