@@ -20,7 +20,7 @@ class ShowDetailsScreen extends StatelessWidget {
       create: (ctx) => controller,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: controller.navigateToAddWatchedEpisode,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(28)),
           ),

@@ -36,6 +36,10 @@ class ShowDetailsScreenController extends ChangeNotifier {
     router?.navigateToEpisodeDetails(episode);
   }
 
+  void navigateToAddWatchedEpisode() {
+    router?.navigateToAddWatchedEpisode();
+  }
+
   // We do have a problem with data not being persisted when returning to the previous screen due to the current architecture,
   // but this could easily be solved with caching in local storage.
   //
