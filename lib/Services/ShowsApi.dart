@@ -1,11 +1,14 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:tv_shows/Models/EpisodeModel.dart';
 import 'package:tv_shows/Models/ShowModel.dart';
 import 'package:tv_shows/Utilities/Constants.dart';
 
 abstract class ShowsApiInterface {
   Future<List<ShowModel>?> getShows(String authToken);
+  Future<ShowModel?> getShowDetails(String authToken, String showId);
+  Future<List<EpisodeModel>?> getEpisodes(String authToken, String showId);
 }
 
 class ShowsApi implements ShowsApiInterface {
@@ -58,6 +61,54 @@ class ShowsApi implements ShowsApiInterface {
       log(e.message);
     }
   }
+
+  @override
+  Future<ShowModel?> getShowDetails(String authToken, String showId) async {
+    try {
+      final dio = Dio()..options.headers["Authentication"] = authToken;
+      final Response<Map<String, dynamic>> response = await dio.get("$BASE_URL/api/shows/$showId");
+
+      try {
+        final data = response.data!["data"];
+        final show = ShowModel.fromMap(data);
+        show.imageUrl = BASE_URL + show.imageUrl;
+
+        return show;
+      } catch (e) {
+        // If the response isn't structured as expected, the parsing should fail.
+        log(e.toString());
+      }
+    } on DioError catch (e) {
+      log(e.message);
+    }
+  }
+
+  @override
+  Future<List<EpisodeModel>?> getEpisodes(String authToken, String showId) async {
+    try {
+      final dio = Dio()..options.headers["Authentication"] = authToken;
+      final Response<Map<String, dynamic>> response = await dio.get("$BASE_URL/api/shows/$showId/episodes");
+
+      try {
+        final data = response.data!["data"];
+
+        final List<EpisodeModel> episodes = [];
+
+        for (final item in data) {
+          final episode = EpisodeModel.fromMap(item);
+          episode.imageUrl = BASE_URL + episode.imageUrl;
+          episodes.add(episode);
+        }
+
+        return episodes;
+      } catch (e) {
+        // If the response isn't structured as expected, the parsing should fail.
+        log(e.toString());
+      }
+    } on DioError catch (e) {
+      log(e.message);
+    }
+  }
 }
 
 class MockShowsApi implements ShowsApiInterface {
@@ -82,6 +133,78 @@ class MockShowsApi implements ShowsApiInterface {
           title: "sometitle",
           imageUrl: "someurl",
           likesCount: 1,
+        ),
+      ];
+    }
+  }
+
+  @override
+  Future<ShowModel?> getShowDetails(String authToken, String showId) async {
+    if (authToken == "validToken" && showId == "validId") {
+      return ShowModel(
+        type: "shows",
+        title: "Star Trek: Voyager",
+        description: "Star Trek: Voyager is a science fiction television series set in the Star Trek universe."
+            " that debuted in 1995 and ended its original run in 2001, with a classic \"ship in space\" formula like the preceding Star"
+            " Trek: The Original Series (TOS) and Star Trek: The Next Generation (TNG).",
+        id: "gPkzfXoJXX5TuTuM",
+        likesCount: 26,
+        imageUrl: "$BASE_URL/1532353336145-voyager.jpg",
+      );
+    }
+  }
+
+  @override
+  Future<List<EpisodeModel>?> getEpisodes(String authToken, String showId) async {
+    if (authToken == "validToken" && showId == "validId") {
+      return [
+        EpisodeModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          description: "Serija koju nesmijem propustiti jer necu biti u toku",
+          episodeNumber: "1",
+          season: "2",
+        ),
+        EpisodeModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          description: "Serija koju nesmijem propustiti jer necu biti u toku",
+          episodeNumber: "2",
+          season: "2",
+        ),
+        EpisodeModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          description: "Serija koju nesmijem propustiti jer necu biti u toku",
+          episodeNumber: "3",
+          season: "2",
+        ),
+        EpisodeModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          description: "Serija koju nesmijem propustiti jer necu biti u toku",
+          episodeNumber: "1",
+          season: "1",
+        ),
+        EpisodeModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          description: "Serija koju nesmijem propustiti jer necu biti u toku",
+          episodeNumber: "2",
+          season: "1",
+        ),
+        EpisodeModel(
+          id: "someid",
+          title: "sometitle",
+          imageUrl: "someurl",
+          description: "Serija koju nesmijem propustiti jer necu biti u toku",
+          episodeNumber: "3",
+          season: "1",
         ),
       ];
     }

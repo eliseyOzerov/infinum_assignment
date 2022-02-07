@@ -21,7 +21,7 @@ class InitScreen extends StatelessWidget {
     if (authToken != null) {
       return "/shows";
     } else {
-      return "/main";
+      return "/login";
     }
   }
 

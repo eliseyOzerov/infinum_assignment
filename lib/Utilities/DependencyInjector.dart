@@ -2,7 +2,10 @@ import 'package:tv_shows/Controllers/ListOfShowsScreenController.dart';
 import 'package:tv_shows/Controllers/LoginScreenController.dart';
 import 'package:tv_shows/Controllers/ShowDetailsScreenController.dart';
 import 'package:tv_shows/Managers/SecureLocalStorage.dart';
+import 'package:tv_shows/Models/EpisodeModel.dart';
 import 'package:tv_shows/Models/ShowModel.dart';
+import 'package:tv_shows/Screens/AddWatchedEpisodeScreen.dart';
+import 'package:tv_shows/Screens/EpisodeDetailsScreen.dart';
 import 'package:tv_shows/Screens/ShowDetailsScreen.dart';
 import 'package:tv_shows/Screens/LoginScreen.dart';
 import 'package:tv_shows/Screens/ListOfShowsScreen.dart';
@@ -36,7 +39,17 @@ class DependencyInjector {
   ShowDetailsScreen makeShowDetailsScreen(ShowModel show) {
     final controller = ShowDetailsScreenController(
       showsApi: ShowsApi.shared,
+      secureLocalStorage: SecureLocalStorage.shared,
+      selectedShow: show,
     );
-    return ShowDetailsScreen(controller: controller, show: show);
+    return ShowDetailsScreen(controller: controller);
+  }
+
+  EpisodeDetailsScreen makeEpisodeDetailsScreen(EpisodeModel episode) {
+    return EpisodeDetailsScreen(episode: episode);
+  }
+
+  AddWatchedEpisodeScreen makeAddWatchedEpisodeScreen() {
+    return const AddWatchedEpisodeScreen();
   }
 }
