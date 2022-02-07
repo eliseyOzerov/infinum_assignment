@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         primaryColor: const Color(0xFFFF758C),
+        backgroundColor: Colors.white,
       ),
       home: const InitScreen(),
       routes: {
