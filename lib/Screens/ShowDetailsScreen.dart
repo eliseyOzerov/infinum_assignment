@@ -4,16 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_shows/Controllers/ShowDetailsScreenController.dart';
-import 'package:tv_shows/Models/ShowModel.dart';
 import 'package:tv_shows/Routers/ShowDetailsRouter.dart';
 import 'package:tv_shows/Utilities/Constants.dart';
 import 'package:tv_shows/Widgets/EpisodeRow.dart';
 
 class ShowDetailsScreen extends StatelessWidget {
   final ShowDetailsScreenController controller;
-  final ShowModel show;
 
-  const ShowDetailsScreen({required this.controller, required this.show, Key? key}) : super(key: key);
+  const ShowDetailsScreen({required this.controller, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +29,7 @@ class ShowDetailsScreen extends StatelessWidget {
         ),
         body: RefreshIndicator(
           onRefresh: controller.getShowDetails,
+          color: Theme.of(context).primaryColor,
           child: CustomScrollView(
             physics: const ClampingScrollPhysics(),
             slivers: [
@@ -66,7 +65,7 @@ class ShowDetailsScreen extends StatelessWidget {
                             ).createShader(rect);
                           },
                           child: CachedNetworkImage(
-                            imageUrl: show.imageUrl,
+                            imageUrl: controller.selectedShow.imageUrl,
                             fit: BoxFit.cover,
                             errorWidget: (ctx, _, __) => const Icon(Icons.error),
                           ),
@@ -82,23 +81,27 @@ class ShowDetailsScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: LARGE_PADDING),
-                      child: Text(
-                        show.title,
-                        style: const TextStyle(
-                          fontSize: 28,
-                          color: Color(0xFF2E2E2E),
-                        ),
-                      ),
+                      child: Consumer<ShowDetailsScreenController>(builder: (context, controller, child) {
+                        return Text(
+                          controller.selectedShow.title,
+                          style: const TextStyle(
+                            fontSize: 28,
+                            color: Color(0xFF2E2E2E),
+                          ),
+                        );
+                      }),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: LARGE_PADDING, vertical: PADDING),
-                      child: Text(
-                        show.description ?? "",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF505050),
-                        ),
-                      ),
+                      child: Consumer<ShowDetailsScreenController>(builder: (context, controller, child) {
+                        return Text(
+                          controller.selectedShow.description ?? "",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF505050),
+                          ),
+                        );
+                      }),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: LARGE_PADDING, vertical: PADDING),
