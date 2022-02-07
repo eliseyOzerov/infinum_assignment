@@ -32,3 +32,23 @@ class ShowDetailsRouter implements ShowDetailsRouterInterface {
     Navigator.of(_context).push(route);
   }
 }
+
+class MockShowDetailsRouter implements ShowDetailsRouterInterface {
+  bool navigatedToAddWatchedEpisode = false;
+  bool navigatedToEpisodeDetails = false;
+  bool returnedToListOfShows = false;
+  @override
+  void navigateToAddWatchedEpisode() {
+    navigatedToAddWatchedEpisode = true;
+  }
+
+  @override
+  void navigateToEpisodeDetails(EpisodeModel episode) {
+    navigatedToEpisodeDetails = true;
+  }
+
+  @override
+  void returnToListOfShows() {
+    returnedToListOfShows = true;
+  }
+}

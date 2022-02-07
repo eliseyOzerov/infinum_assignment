@@ -9,7 +9,7 @@ import 'package:tv_shows/Services/ShowsApi.dart';
 
 class ShowDetailsScreenController extends ChangeNotifier {
   final ShowsApiInterface showsApi;
-  final SecureLocalStorage secureLocalStorage;
+  final SecureLocalStorageInterface secureLocalStorage;
   ShowDetailsRouterInterface? router;
 
   ShowModel selectedShow;
